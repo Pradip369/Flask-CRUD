@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Auth
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container w-25 card py-2">
+
+<form action="{{ request.path }}" method="POST">
+    
+    {{ form.csrf_token }}
+    
+    <!-- User name -->
+    {% if request.path == url_for('auth_views.register') %}
+        {{ form.username(class_="form-control",placeholder="Username")}} 
+        {% for error in form.username.errors %}
+                {{ error }}
+        {% endfor%}
+        <br/>
+    {% endif %}
+
+    <!-- Email -->
+    {{ form.email(class_="form-control",placeholder="Email")}}
+    {% for error in form.email.errors %}
+        {{ error }}
+    {% endfor %}
+    <br/>
+    <!-- Password -->
+    {{ form.password(class_="form-control",placeholder="Password")}}
+    {% for error in form.password.errors %}
+        {{ error }}
+    {% endfor %}
+    <br/>
+
+    <!-- Confirm Password -->
+    {% if request.path == url_for('auth_views.register') %}
+        {{ form.cpwd(class_="form-control",placeholder="Confirm Password")}}
+        {% for error in form.cpwd.errors %}
+            {{ error }}
+        {% endfor%}
+        <br/>
+    {% endif %}
+       
+    <!-- Form Submit -->
+    <button type="submit" class="btn btn-block btn-primary mb-3">
+        Submit
+    </button>
+
+    <p>
+    {% if request.path != url_for('auth_views.register') %}
+    Forgote Password?
+    <a href="{{url_for('auth_views.reset_password')}}">Reset now</a>
+    <br/>
+    New here?
+    <a href="{{url_for('auth_views.register')}}">Create account</a>
+    {% else %}
+    Already have an account?
+    <a href="{{url_for('auth_views.login')}}">Login</a>
+    {% endif %}
+    </p>
+
+</form>
+</div>
+{% endblock %}

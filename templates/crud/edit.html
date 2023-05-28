@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit
+{% endblock %}
+
+{% block content %}
+
+<div class="modal-body">
+    <div class="modal-content container-fluid py-2">
+    <h5 class="text-center alert alert-info">Edit Data</h5>
+    <form action="{{url_for('crud_views.edit',id=data.id)}}" method='post'>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="mb-3">
+            <div class="mb-3">
+              <label for="Title" class="form-label">Title</label>
+              <input type="text" class="form-control" name="title" required value="{{data.title}}">
+            </div>
+          <label for="Description" class="form-label">Description</label>
+          <input type="text" class="form-control" name="description" required value="{{data.description}}">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+</div>
+
+{% endblock %}

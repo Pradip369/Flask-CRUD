@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container w-75 py-2">
+
+<div class="row">
+    <div class="col-sm-6 card py-2">
+        <h6 class="alert alert-warning text-center">Profile Details</h6>
+        {% if pf_data.profile_image %}
+            <img src = "{{ url_for('media', filename=pf_data.profile_image) }}" width="300" height="300" alt="Profile image">
+        {% endif %}
+        <h4>{{pf_data.first_name}}</h4>
+        <br/>
+        Last_name : {{pf_data.last_name}}
+        <br/>
+        Age : {{pf_data.age}}
+        <br/>
+        Gender : {{pf_data.gender}}
+        <br/>
+    </div>
+    <div class="col-sm-6  card py-2">
+        <h6 class="alert alert-info text-center">Edit Profile</h6>
+        <form action="{{ request.path }}" method="POST" enctype="multipart/form-data">
+    
+            {{ form.csrf_token }}
+            
+            <!-- First name -->
+            {{ form.first_name(class_="form-control",placeholder="First name")}} 
+            {% for error in form.first_name.errors %}
+                    {{ error }}
+            {% endfor%}
+            <br/>
+        
+            <!-- Last name -->
+            {{ form.last_name(class_="form-control",placeholder="Last name")}}
+            {% for error in form.last_name.errors %}
+                {{ error }}
+            {% endfor %}
+            <br/>
+        
+            <!-- Profile Image -->
+            {{ form.profile_image(class_="form-control")}}
+            {% for error in form.profile_image.errors %}
+                {{ error }}
+            {% endfor %}
+            <br/>
+        
+            <!-- age -->
+            {{ form.age(class_="form-control",placeholder="Age")}}
+            {% for error in form.age.errors %}
+                {{ error }}
+            {% endfor %}
+            <br/>
+        
+            <!-- Gender -->
+            {{ form.gender(class_="form-control form-select form-select-sm")}}
+            {% for error in form.gender.errors %}
+                {{ error }}
+            {% endfor %}
+            <br/>
+
+            <!-- Favourite songs -->
+            {{ form.favourite_songs(class_="form-control")}}
+            {% for error in form.favourite_songs.errors %}
+                {{ error }}
+            {% endfor %}
+            <br/>
+               
+            <!-- Form Submit -->
+            <button type="submit" class="btn btn-block btn-primary mb-3">
+                Submit
+            </button>
+        
+        </form>
+    </div>
+</div>
+
+</div>
+{% endblock %}

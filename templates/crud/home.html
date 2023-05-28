@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4">
+            <form action="/create" method='post'>
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <div class="mb-3">
+                    <div class="mb-3">
+                      <label for="Title" class="form-label">Title</label>
+                      <input type="text" class="form-control" name="title" required>
+                    </div>
+                  <label for="Description" class="form-label">Description</label>
+                  <textarea class="form-control" name="description" rows="3" required></textarea>
+                </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+    
+        <div class="col-sm-8">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for data in user_data %}
+                    <tr>
+                      <th scope="row">{{data.id}}</th>
+                      <td>{{data.title}}</td>
+                      <td>{{data.description}}</td>
+                      <td>
+                        <a class="btn btn-info btn-sm" href="{{ url_for('crud_views.edit',id=data.id) }}">Edit</a>
+                        <a class="btn btn-danger btn-sm" href="{{ url_for('crud_views.delete',id=data.id) }}">Delete</a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
